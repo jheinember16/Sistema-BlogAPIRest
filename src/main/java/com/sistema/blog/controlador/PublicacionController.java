@@ -1,12 +1,13 @@
 package com.sistema.blog.controlador;
 
 import com.sistema.blog.dto.PublicacionDTO;
+import com.sistema.blog.dto.PublicacionRespuesta;
 import com.sistema.blog.service.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.sistema.blog.utileria.AppConstantes;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/publicaciones")
@@ -16,9 +17,24 @@ public class PublicacionController {
     private PublicacionService publicacionServicio;
 
     @GetMapping
-    public List<PublicacionDTO> obtenerTodas() {
-        return publicacionServicio.obtenerTodasLasPublicaciones();
+    public ResponseEntity<PublicacionRespuesta> obtenerTodas(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int numeroDePagina,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int medidaDePagina,
+            @RequestParam(value = "sortBy", defaultValue = AppConstantes.ORDENAR_POR_DEFECTO, required = false) String ordenarPor,
+            @RequestParam(value = "sortDir", defaultValue = AppConstantes.ORDENAR_DIRECCION_POR_DEFECTO, required = false) String sortDir) {
+
+        // Llamar al servicio con los parámetros de paginación y ordenación
+        PublicacionRespuesta respuesta = publicacionServicio.obtenerTodasLasPublicaciones(
+                numeroDePagina,
+                medidaDePagina,
+                ordenarPor,
+                sortDir);
+
+        return ResponseEntity.ok(respuesta);
     }
+
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<PublicacionDTO> obtenerPorId(@PathVariable Long id) {
