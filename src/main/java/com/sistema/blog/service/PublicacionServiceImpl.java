@@ -71,7 +71,6 @@ public class PublicacionServiceImpl implements PublicacionService {
         }
 
         publicacionMapper.actualizarDesdeDto(dto, publicacion);
-
         Publicacion actualizada = publicacionRepositorio.save(publicacion);
         return publicacionMapper.toDto(actualizada);
     }
