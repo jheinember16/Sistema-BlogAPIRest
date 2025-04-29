@@ -30,7 +30,7 @@ public class Publicacion {
     private String contenido;
 
     @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude // Evita recursión en toString()
+    @ToString.Exclude
     @JsonManagedReference
     private List<Comentario> comentarios = new ArrayList<>();
 

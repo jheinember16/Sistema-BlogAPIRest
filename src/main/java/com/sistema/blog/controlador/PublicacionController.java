@@ -5,11 +5,11 @@ import com.sistema.blog.dto.PublicacionRespuesta;
 import com.sistema.blog.service.PublicacionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.sistema.blog.utileria.AppConstantes;
-
 
 @RestController
 @RequestMapping("/api/publicaciones")
@@ -42,20 +42,24 @@ public class PublicacionController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PublicacionDTO> crear(@Valid @RequestBody PublicacionDTO publicacionDTO) {
-        return ResponseEntity.ok(publicacionServicio.crearPublicacion(publicacionDTO));
+        PublicacionDTO dto = publicacionServicio.crearPublicacion(publicacionDTO);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<PublicacionDTO> actualizar(@Valid @PathVariable Long id, @RequestBody PublicacionDTO publicacionDTO) {
-        return ResponseEntity.ok(publicacionServicio.actualizarPublicacion(id, publicacionDTO));
+    public ResponseEntity<PublicacionDTO> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody PublicacionDTO publicacionDTO) {
+        PublicacionDTO actualizado = publicacionServicio.actualizarPublicacion(id, publicacionDTO);
+        return ResponseEntity.ok(actualizado);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarPublicacion(@PathVariable(name = "id") Long id) {
         publicacionServicio.eliminarPublicacion(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Publicación con id " + id + " eliminada correctamente");
     }
-
 }

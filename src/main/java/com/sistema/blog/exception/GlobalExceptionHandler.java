@@ -19,15 +19,22 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
+
     public ResponseEntity<ErrorDetails> manejarResourceNotFoundException(ResourceNotFoundException exception,WebRequest webRequest){
         ErrorDetails errorDetalles = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetalles,HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(BlogAppException.class)
-    public ResponseEntity<ErrorDetails> manejarBlogAppException(BlogAppException exception,WebRequest webRequest){
-        ErrorDetails errorDetalles = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetalles,HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorDetails> manejarBlogAppException(BlogAppException exception, WebRequest webRequest) {
+        ErrorDetails errorDetalles = new ErrorDetails(
+                new Date(),
+                exception.getMessage(),
+                webRequest.getDescription(false)
+        );
+        return new ResponseEntity<>(errorDetalles, exception.getStatus());
     }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDetails> manejarGlobalException(Exception exception,WebRequest webRequest){
         ErrorDetails errorDetalles = new ErrorDetails(new Date(),exception.getMessage(), webRequest.getDescription(false));

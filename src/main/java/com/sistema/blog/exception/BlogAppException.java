@@ -13,7 +13,6 @@ public class BlogAppException extends RuntimeException {
     }
 
     public BlogAppException(HttpStatus status, String message, String detail) {
-        super(message + ": " + detail);
-        this.status = status;
+        this(status, message + ": " + detail);
     }
 }

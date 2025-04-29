@@ -49,7 +49,6 @@ public class ComentarioController {
             @PathVariable(value = "comentarioId") Long comentarioId) {
 
         ComentarioDTO comentario = comentarioService.obtenerComentarioPorId(publicacionId, comentarioId);
-
         ResponseDTO<ComentarioDTO> response = new ResponseDTO<>();
         response.setMessage("Comentario obtenido exitosamente");
         response.setData(comentario);
@@ -63,11 +62,9 @@ public class ComentarioController {
             @Valid @RequestBody ComentarioDTO comentarioDTO) {
 
         ComentarioDTO comentarioActualizado = comentarioService.actualizarComentario(publicacionId, comentarioId, comentarioDTO);
-
         ResponseDTO<ComentarioDTO> response = new ResponseDTO<>();
         response.setMessage("Comentario actualizado exitosamente");
         response.setData(comentarioActualizado);
-
         return ResponseEntity.ok(response);
     }
 
@@ -75,7 +72,6 @@ public class ComentarioController {
     public ResponseEntity<ResponseDTO<String>> eliminarComentario(
             @PathVariable Long publicacionId,
             @PathVariable Long comentarioId) {
-
         comentarioService.eliminarComentario(publicacionId, comentarioId);
         ResponseDTO<String> response = new ResponseDTO<>();
         response.setMessage("Comentario eliminado exitosamente");
