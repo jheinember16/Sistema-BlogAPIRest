@@ -34,6 +34,7 @@ public class PublicacionController {
         return ResponseEntity.ok(respuesta);
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<PublicacionDTO> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(publicacionServicio.obtenerPublicacionPorId(id));
@@ -43,17 +44,15 @@ public class PublicacionController {
     @PostMapping
     public ResponseEntity<PublicacionDTO> crear(@Valid @RequestBody PublicacionDTO publicacionDTO) {
         PublicacionDTO dto = publicacionServicio.crearPublicacion(publicacionDTO);
-        return new ResponseEntity<>(dto, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
-
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PublicacionDTO> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody PublicacionDTO publicacionDTO) {
-        PublicacionDTO actualizado = publicacionServicio.actualizarPublicacion(id, publicacionDTO);
-        return ResponseEntity.ok(actualizado);
+        return ResponseEntity.ok(publicacionServicio.actualizarPublicacion(id, publicacionDTO));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

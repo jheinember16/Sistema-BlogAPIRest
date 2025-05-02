@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -61,5 +62,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         respuesta.put("errores", errores);
 
         return new ResponseEntity<>(respuesta, headers, status);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorDetails> manejarDataIntegrityViolationException(DataIntegrityViolationException exception, WebRequest webRequest) {
+        ErrorDetails errorDetalles = new ErrorDetails(
+                new Date(),
+                "Error de integridad en la base de datos: " + exception.getMostSpecificCause().getMessage(),
+                webRequest.getDescription(false)
+        );
+        return new ResponseEntity<>(errorDetalles, HttpStatus.BAD_REQUEST);
     }
 }

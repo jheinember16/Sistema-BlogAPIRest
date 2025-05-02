@@ -18,7 +18,7 @@ public class PublicacionDTO {
     private Long id;
 
     @NotEmpty
-    @Size(min = 2,message = "El titulo de la publicación deberia tener al menos 8 caracteres")
+    @Size(min = 2,message = "El titulo de la publicación deberia tener al menos 2 caracteres")
     private String titulo;
 
     @NotEmpty
@@ -26,7 +26,7 @@ public class PublicacionDTO {
     private String descripcion;
 
     @NotEmpty
-    @Size(min = 10,message = "El contenido de la publicación deberia tener al menos 15 caracteres")
+    @Size(min = 15,message = "El contenido de la publicación deberia tener al menos 15 caracteres")
     private String contenido;
 
     private Set<Comentario> comentarios;
