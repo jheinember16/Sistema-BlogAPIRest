@@ -38,12 +38,15 @@ public class PublicacionControladorTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @SuppressWarnings("removal")
     @MockBean
     private CustomUserDetailsService customUserDetailsService;
 
+    @SuppressWarnings("removal")
     @MockBean
     private JwtTokenProvider jwtTokenProvider;
 
+    @SuppressWarnings("removal")
     @MockBean
     private PublicacionService publicacionServicio;
 

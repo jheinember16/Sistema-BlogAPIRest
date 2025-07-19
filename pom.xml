@@ -13,7 +13,7 @@
 
     <groupId>com.sistema.blog</groupId>
     <artifactId>Sistema-BlogAPIRest</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>Sistema-BlogAPIRest</name>
     <description>API REST para sistema de blog con Spring Boot y JWT</description>
 
